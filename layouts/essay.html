@@ -1,0 +1,76 @@
+<header>
+	<h1>
+		<koken:link>
+			{{ title }}
+		</koken:link>
+	</h1>
+</header>
+
+{{ content }}
+
+<footer>
+
+	<div>
+
+		<i class="kicon-text-time"></i> <koken:time class="publish-date" show="date" />&nbsp;&nbsp;&nbsp;&nbsp;<i class="kicon-text-link"></i> <koken:link>Permalink</koken:link>&nbsp;&nbsp;&nbsp;&nbsp;<koken:if true="settings.show_share_link">
+			<div class="share_content">
+				<i class="kicon-text-plus-sign"></i> <span class="share_button">Share</span>
+				<div class="kshare">
+					<input type="text" class="kshare-input" value="{{ essay.url }}" />
+					<ul class="kshare-items">
+						<li>
+				    		<koken:if empty="profile.twitter"><a href="https://twitter.com/intent/tweet?text={{ essay.title url_encode="true" }}&url={{ essay.url url_encode="true" }}" class="share-twitter" title="Share {{ essay.title url_encode="true" }} on Twitter"><koken:else><a href="https://twitter.com/intent/tweet?text={{ essay.title url_encode="true" }}&url={{ essay.url url_encode="true" }}&via={{ profile.twitter }}" class="share-twitter" title="Share {{ essay.title url_encode="true" }} on Twitter"></koken:if><i class="kicon-share-twitter"></i></a>
+				    	</li>
+				    	<li>
+				   			 <a href="https://www.facebook.com/sharer.php?u={{ essay.url url_encode="true" }}" class="share-facebook"><i class="kicon-share-facebook"></i></a>
+				   		</li>
+				   		<li>
+				    		<a href="http://pinterest.com/pin/create/button/?url={{ essay.url url_encode="true" }}" class="share-pinterest"><i class="kicon-share-pinterest"></i></a>
+				    	</li>
+				    	<li>
+				    		<a href="http://www.tumblr.com/share/photo?source={{ essay.featured_image.presets.medium_large.url url_encode="true" }}&caption=%3Cp%3E%3Cstrong%3E%3Ca href=&quot;{{ essay.url url_encode="true" }}&quot; title=&quot;{{ essay.title url_encode="true" }}&quot;%3E{{ essay.title url_encode="true" }}%3C/a%3E%3C%2Fstrong%3E%3C%2Fp%3E%3Cp%3E{{ essay.excerpt url_encode="true" }}%3C%2Fp%3E&click_thru={{ essay.url url_encode="true" }}" class="share-tumblr" title="Share {{ essay.title url_encode="true" }} on Tumblr"><i class="kicon-share-tumblr"></i></a>
+				    	</li>
+				    	<li>
+				    		<a href="https://plus.google.com/share?url={{ essay.url url_encode="true" }}" class="share-google"><i class="kicon-share-gplus"></i></a>
+				    	</li>
+				    </ul>
+			    </div>
+			 </div>
+		</koken:if>
+
+	</div>
+
+	<koken:topics>
+		<div>
+			<i class="kicon-text-topic"></i>
+			<koken:loop separator=", ">
+				<koken:link>
+					{{ album.title }}
+				</koken:link>
+			</koken:loop>
+		</div>
+	</koken:topics>
+
+	<koken:categories>
+		<div>
+			<i class="kicon-text-category"></i>
+			<koken:loop separator=", ">
+				<koken:link>
+					{{ category.title }}
+				</koken:link>
+			</koken:loop>
+		</div>
+	</koken:categories>
+
+	<koken:tags>
+		<div>
+			<i class="kicon-text-tag"></i>
+			<koken:loop separator=", ">
+				<koken:link>
+					{{ tag.title }}
+				</koken:link>
+			</koken:loop>
+		</div>
+	</koken:tags>
+
+</footer>

@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'kessay';
+  src: url('../font/kessay.eot?9320254');
+  src: url('../font/kessay.eot?9320254#iefix') format('embedded-opentype'),
+       url('../font/kessay.woff?9320254') format('woff'),
+       url('../font/kessay.ttf?9320254') format('truetype'),
+       url('../font/kessay.svg?9320254#kessay') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="kicon-text-"],
+[class*=" kicon-text-"] {
+  font-family: kessay;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  vertical-align: baseline;
+  background-image: none;
+  background-position: 0% 0%;
+  background-repeat: repeat;
+  margin-top: 0;
+  margin-right: 0.2em;
+}
+
+.kicon-text-time:before                 { content: "\e808"; }
+.kicon-text-link:before                 { content: "\e807"; }
+.kicon-text-tag:before                  { content: "\e806"; }
+.kicon-text-plus-sign:before            { content: "\e802"; }
+.kicon-text-plus:before                 { content: "\e803"; }
+.kicon-text-category:before             { content: "\e80a"; }
+.kicon-text-star:before                 { content: "\e801"; }
+.kicon-text-heart:before                { content: "\e800"; }
+.kicon-text-topic:before                { content: "\e805"; }

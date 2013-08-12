@@ -1,0 +1,9 @@
+<koken:include file="layouts/header.html" />
+
+<div id="main">
+
+	Error: {{ routed_variables.code }}
+
+</div>
+
+<koken:include file="layouts/footer.html" />

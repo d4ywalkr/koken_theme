@@ -1,0 +1,64 @@
+<koken:pagination limit="10">
+
+	<div class="paginate">
+
+		<div class="nav">
+
+			<ol>
+
+				<koken:pagination_previous>
+
+				<li class="prev">
+					<koken:link title="Previous" bind_to_key="left">
+						Previous
+					</koken:link>
+				</li>
+
+				</koken:pagination_previous>
+
+				<li>
+
+					<ol class="num">
+
+					<koken:pagination_limited_previous>
+						<li>
+							<koken:link>...</koken:link>
+						</li>
+					</koken:pagination_limited_previous>
+
+					<koken:loop>
+
+						<li>
+							<koken:link class="{{ is_current }}" title="{{ number }}">
+								{{ number }}
+							</koken:link>
+						</li>
+
+					</koken:loop>
+
+					<koken:pagination_limited_next>
+						<li>
+							<koken:link>...</koken:link>
+						</li>
+					</koken:pagination_limited_next>
+
+					</ol>
+
+				</li>
+
+				<koken:pagination_next>
+
+				<li class="next">
+					<koken:link title="Next" bind_to_key="right">
+						Next
+					</koken:link>
+				</li>
+
+				</koken:pagination_next>
+			</ol>
+
+		</div>
+
+	</div>
+
+</koken:pagination>

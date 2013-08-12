@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <body class="ie9"> <![endif<]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="{{ site.description }}" />
+	<meta name="author" content="{{ site.title }}" />
+	<meta name="keywords" content="{{ site.keywords }}" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<koken:title />
+
+	<koken:asset file="reset.css" common="true" />
+	<koken:asset file="animate.css" common="true" />
+	<koken:asset file="css/screen.css" />
+	<koken:asset file="css/kessayicons.css" />
+	<koken:if true="settings.show_share_link"><koken:asset file="css/ksocial.css" /><koken:asset file="css/kshare.css" /></koken:if>
+	<koken:settings />
+
+	<koken:asset file="js/jquery.smooth-scroll.min.js" />
+	<koken:asset file="js/jquery.sidr.min.js" />
+	<koken:asset file="jquery.pjax.js" common="true" />
+
+	<script>
+		$(function() {
+
+			var navClassSets = function() {
+				$('.k-nav-current').parentsUntil('nav').each(function(i,element) {
+					if ($(element).get(0).tagName === 'UL') {
+						$(element).prev().addClass('k-nav-open');
+					}
+				});
+			}
+			navClassSets();
+
+			$(window).bind('resize', function() {
+				$('#strip').css({
+					left: $('#main').offset().left + $('#main').width() + 40 + 'px'
+				});
+			})
+			.trigger('resize');
+
+			$('nav a:not(.k-nav-set), header h1 a').pjax('#target', {
+				timeout: 2000
+			});
+
+			$(document)
+				.on('pjax.start', function() {
+					$('#target').empty();
+					$K.navigation.setCurrent( arguments[2].clickedElement.attr('href') );
+					window.scrollTo(0,0);
+				})
+				.on('pjax.click', function() {
+					navClassSets();
+					$('.k-nav-current').parentsUntil('nav').each(function(i,element) {
+						if ($(element).hasClass('k-nav-root')) {
+							if ($('.k-nav-current').closest('ul').prev().hasClass('k-nav-open')) {
+								$(element).addClass('paused');
+							} else {
+								$(element).removeClass('paused');
+							}
+						}
+					});
+				})
+				.on('scroll', function() {
+					$('.item').each(function() {
+						if ( ($(this).offset().top+$('body').offset().top) > $(window).scrollTop() ) {
+							$('#strip .current').removeClass('current');
+							$('#strip a[href="#' + $(this).attr('id') + '"]').addClass('current');
+							return false;
+						}
+					});
+				})
+				.trigger('scroll');
+
+			function createStrip() {
+				$('#strip a').smoothScroll({
+					offset: -{{ settings.offset_top }},
+					afterScroll: function() {
+						$('#strip .current').removeClass('current');
+						$(this).addClass('current');
+					}
+				});
+			}
+
+			window.pjaxReload = function() {
+				createStrip();
+				$K.responsiveImages();
+				$(window).trigger('resize');
+				$(document).trigger('scroll');
+			}
+
+			createStrip();
+
+		});
+	</script>
+
+</head>
+
+<body>
+
+	<koken:if true="settings.show_social">
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+	</koken:if>
+
+	<div id="sidr-left" class="mob">
+ 		<koken:include file="layouts/nav.html" />
+	</div>
+
+	<div id="mob-bttn-row"><a id="mob-menu" href="#mob-menu" title="Open mobile menu"><i class="kicon-mob-menu"></i></a></div>
+
+	<div id="page">
+
+		<div id="col">
+
+			<div class="in">
+
+				<header class="top">
+					<koken:if data="settings.site_title_type" equals="text">
+						<h1><koken:link to="front">{{ site.title }}</koken:link></h1>
+						<koken:if true="settings.show_tagline">
+							<span class="tagline">{{ site.tagline }}</span>
+						</koken:if>
+					<koken:else>
+						<koken:link to="front"><img src="{{ settings.site_title_img_url }}" alt="{{ site.title }}" class="custom_logo"></koken:link>
+					</koken:if>
+				</header>
+
+				<nav>
+					<koken:include file="layouts/nav.html" />
+				</nav>
+
+				<div id="col-xtra">
+
+					<div id="col-xtra-content">
+
+						<koken:if true="settings.show_social">
+						<p>
+							<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-href="{{ location.site_url }}"></div>
+							<br>
+							<a href="https://twitter.com/share" class="twitter-share-button">Tweet</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+						</p>
+						</koken:if>
+
+						<p>
+							{{ site.copyright }}
+						</p>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div> <!-- close col -->
+
+		<div id="target">

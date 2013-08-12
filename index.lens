@@ -1,0 +1,31 @@
+<koken:if true="pjax">
+	<koken:title />
+<koken:else>
+	<koken:include file="layouts/header.html" />
+</koken:if>
+
+<div id="main">
+
+	<koken:load>
+
+		<koken:include file="layouts/content_loop.html" />
+
+		<koken:include file="layouts/pagination.html" />
+
+	<koken:else>
+
+		<koken:note>
+			This area displays featured content. Add some in the Library.
+		</koken:note>
+
+	</koken:load>
+
+</div>
+
+<koken:if true="pjax">
+	<script>
+		pjaxReload();
+	</script>
+<koken:else>
+	<koken:include file="layouts/footer.html" />
+</koken:not>

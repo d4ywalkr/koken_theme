@@ -1,0 +1,116 @@
+<koken:if true="pjax">
+	<koken:title />
+<koken:else>
+	<koken:include file="layouts/header.html" />
+</koken:if>
+
+<div id="main">
+
+	<koken:load>
+
+		<koken:head>
+			<meta property="og:site_name" content="{{ site.title }}" />
+			<meta property="og:title" content="{{ album.title strip_html="true" }}" />
+			<meta property="og:description" content="{{ album.summary | album.description strip_html="true" }}" />
+			<meta property="og:type" content="website" />
+			<meta property="og:url" content="{{ album.url }}" />
+			<koken:covers><koken:shift>
+			<meta property="og:image" content="{{ content.presets.medium_large.url }}" />
+			<meta property="og:image:width" content="{{ content.presets.medium_large.width }}" />
+			<meta property="og:image:height" content="{{ content.presets.medium_large.height }}" />
+			</koken:shift></koken:covers>
+			<koken:not empty="profile.twitter">
+				<meta name="twitter:card" content="gallery" />
+				<meta name="twitter:site" content="@{{ profile.twitter }}" />
+				<meta name="twitter:creator" content="@{{ profile.twitter }}" />
+				<koken:covers minimum="4" limit="4">
+					<koken:loop>
+						<meta name="twitter:image{{ index }}" content="{{ content.presets.medium_large.cropped.url }}">
+					</koken:loop>
+				</koken:covers>
+			</koken:not>
+		</koken:head>
+
+	<div id="inhalt">
+          <ol>
+            <koken:loop>
+              <div class="album-teaser">
+              <li>
+                <koken:link>
+                    <koken:covers>
+			<koken:if data="settings.cover_limit" equals="single">
+				<span class="covers n1">
+					<span class="cover">
+						<koken:first>
+							<koken:img class="content" lazy="true" />
+						</koken:first>
+					</span>
+				</span>
+			<koken:else>
+				<span class="covers crop n{{ covers.length }}">
+					<koken:loop>
+					<span class="cover">
+						<koken:img class="content" lazy="true" size="2:3" />
+					</span>
+					</koken:loop>
+				</span>
+			</koken:if>
+			</koken:covers>
+                </koken:link>
+                
+		<span class="img-data">
+
+				<span class="img-caption">
+					
+						<h4><koken:link title="View {{ album.title }}">{{ album.title }}</koken:link></h4>
+					
+						<p>{{ album.description }}</p>
+					
+				</span>
+
+				
+
+					<!--<span class="meta">
+						<koken:categories>
+							<p>
+								<strong>{{ labels.category.plural }}</strong>
+								<koken:loop separator=", ">
+									<koken:link>
+										{{ category.title }}
+									</koken:link>
+								</koken:loop>
+							</p>
+						</koken:categories>
+						<koken:tags>
+							<p>
+								<strong>{{ labels.tag.plural }}</strong>
+								<koken:loop separator=", ">
+									<koken:link>
+										{{ tag.title }}
+									</koken:link>
+								</koken:loop>
+							</p>
+						</koken:tags>
+					</span>-->
+
+				
+
+			</span>
+		
+              </li>
+              </div>
+            </koken:loop>
+          </ol>
+        </div> <!-- end .inhalt -->
+
+	</koken:load>
+
+</div>
+
+<koken:if true="pjax">
+	<script>
+		pjaxReload();
+	</script>
+<koken:else>
+	<koken:include file="layouts/footer.html" />
+</koken:not>

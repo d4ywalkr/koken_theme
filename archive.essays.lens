@@ -1,0 +1,43 @@
+<koken:if true="pjax">
+	<koken:title />
+<koken:else>
+	<koken:include file="layouts/header.html" />
+</koken:if>
+
+<div id="main">
+
+<koken:load limit="10">
+
+	<p>
+		<koken:link to="essays">{{ labels.essay.plural case="title" }} </koken:link>&nbsp;&nbsp;/&nbsp;&nbsp;{{ archive.type.plural }}&nbsp;&nbsp;/&nbsp;&nbsp;{{ archive.title }}
+	</p>
+
+	<koken:loop>
+
+		<article>
+
+			<koken:include file="layouts/essay.html" />
+
+		</article>
+
+	</koken:loop>
+
+	<koken:keyboard_scroll element="article" />
+
+	<koken:include file="layouts/pagination.html" />
+
+	<koken:else>
+
+		<koken:note>
+			No essays found.
+		</koken:note>
+
+</koken:load>
+
+</div>
+
+<koken:if true="pjax">
+	<script>$K.ready();</script>
+<koken:else>
+	<koken:include file="layouts/footer.html" />
+</koken:not>

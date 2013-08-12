@@ -1,0 +1,33 @@
+<koken:if true="pjax">
+	<koken:title />
+<koken:else>
+	<koken:include file="layouts/header.html" />
+</koken:if>
+
+	<koken:load>
+
+	<div id="main">
+
+		<article>
+
+			<header>
+				<h1>
+					<a href="#">
+						{{ page.title }}
+					</a>
+				</h1>
+			</header>
+
+			{{ page.content }}
+
+		</article>
+
+	</div>
+
+	</koken:load>
+
+<koken:if true="pjax">
+	<script>$K.ready();</script>
+<koken:else>
+	<koken:include file="layouts/footer.html" />
+</koken:not>

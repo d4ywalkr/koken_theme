@@ -1,0 +1,74 @@
+<koken:if true="pjax">
+	<koken:title />
+<koken:else>
+	<koken:include file="layouts/header-favorites.html" />
+</koken:if>
+
+<div id="main">
+
+	<koken:load>
+
+		<div class="media">
+
+			<koken:pulse jsvar="pulse" link_to="advance" transition_type="fade" transition_duration="1000" />
+
+			<koken:if true="settings.show_exif_fave">
+				<div class="media-meta"><ol id="fave_exif" class="exif"></ol></div>
+			</koken:if>
+
+			<span class="text">
+
+				<koken:if true="settings.show_title_fave">
+					<h3 id="fave_title"></h3>
+				</koken:if>
+
+				<koken:if true="settings.show_caption_fave">
+					<p id="fave_caption"></p>
+				</koken:if>
+
+			</span>
+
+		</div>
+
+		<script>
+			pulse.on( 'transitionstart', function(e) {
+				var data = e.data,
+					title = $('#fave_title'),
+					caption = $('#fave_caption');
+
+				if (title) {
+					title.html( data.title || data.filename );
+				}
+				if (caption) {
+					caption.html( data.caption );
+				}
+				var exif_fields = ['aperture','exposure','focal_length','iso_speed_ratings'],
+					exif_element = $('#fave_exif'),
+					wrap = $('<li/>');
+
+				var fields = $.map(e.data.exif_fields, function(field) {
+					if ($.inArray(field,exif_fields) !== -1) {
+						return $.map(e.data.exif, function (exif_val) {
+							if (exif_val.key === field) {
+								return (exif_val.clean) ? exif_val.clean : exif_val.raw;
+							}
+						});
+					}
+				});
+
+				exif_element.html($.map(fields, function(field) {
+					return wrap.clone().text(field);
+				}));
+
+			});
+		</script>
+
+	<koken:else>
+
+		This template's slideshow displays favorited content. Add some in the Libary.
+
+	</koken:load>
+
+</div>
+
+<koken:include file="layouts/footer.html" />

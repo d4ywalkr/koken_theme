@@ -1,0 +1,79 @@
+<koken:if true="pjax">
+	<koken:title />
+<koken:else>
+	<koken:include file="layouts/header.html" />
+</koken:if>
+
+	<koken:load>
+
+		<koken:head>
+			<meta property="og:site_name" content="{{ site.title }}" />
+			<meta property="og:title" content="{{ essay.title strip_html="true" }}" />
+			<meta property="og:description" content="{{ essay.excerpt strip_html="true" }}" />
+			<meta property="og:url" content="{{ essay.url }}" />
+			<meta property="og:type" content="website" />
+			<meta property="og:image" content="{{ essay.featured_image.presets.medium_large.url }}" />
+			<meta property="og:image:width" content="{{ essay.featured_image.presets.medium_large.width }}" />
+			<meta property="og:image:height" content="{{ essay.featured_image.presets.medium_large.height }}" />
+			<meta name="medium" content="article" />
+			<koken:not empty="profile.twitter">
+				<meta name="twitter:card" content="summary_large_image" />
+				<meta name="twitter:title" content="{{ essay.title truncate="70" }}" />
+				<meta name="twitter:site" content="@{{ profile.twitter }}" />
+				<meta name="twitter:creator" content="@{{ profile.twitter }}" />
+				<meta name="twitter:description" content="{{ essay.excerpt truncate="200" strip_html="true" }}" />
+				<meta name="twitter:image" content="{{ essay.featured_image.presets.medium_large.url }}" />
+			</koken:not>
+		</koken:head>
+
+		<div id="main">
+
+			<article>
+
+				<koken:include file="layouts/essay.html" />
+
+				<koken:load source="featured_essays">
+					<div id="feat-essays">
+						<h2>Featured {{ labels.essay.plural case="lower" }}</h2>
+						<div id="essay-list">
+							<koken:loop>
+								<div>
+									<koken:featured_image>
+										<koken:link><koken:img size="16:9" /></koken:link>
+									</koken:featured_image>
+									<koken:time show="date" />
+									<h3>
+										<koken:link title="Read {{ essay.title }}">{{ essay.title }}</koken:link>
+									</h3>
+									{{ essay.excerpt }} <koken:link title="Read {{ essay.title }}">more</koken:link>
+								</div>
+							</koken:loop>
+						</div>
+					</div>
+				</koken:load>
+
+				<koken:if true="settings.show_disc_essay">
+
+					<div id="kdiscuss">
+
+						<koken:discussion>
+
+							{{ discussion }}
+
+						</koken:discussion>
+
+					</div>
+
+				</koken:if>
+
+			</article>
+
+		</div>
+
+	</koken:load>
+
+<koken:if true="pjax">
+	<script>$K.ready();</script>
+<koken:else>
+	<koken:include file="layouts/footer.html" />
+</koken:not>
